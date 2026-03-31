@@ -20,6 +20,34 @@ jobs:
         uses: tue-robotics/tue-env/ci/modified-packages@master
         with:
           commit-range: ${{ steps.commit-range.outputs.commit-range }}
+          ignored-packages: >-
+            ament_cmake_copyright
+            ament_cmake_cppcheck
+            ament_cmake_cpplint
+            ament_cmake_flake8
+            ament_cmake_lint_cmake
+            ament_cmake_mypy
+            ament_cmake_pclint
+            ament_cmake_pep257
+            ament_cmake_pycodestyle
+            ament_cmake_pyflakes
+            ament_cmake_uncrustify
+            ament_cmake_xmllint
+            ament_copyright
+            ament_cppcheck
+            ament_cpplint
+            ament_flake8
+            ament_lint
+            ament_lint_auto
+            ament_lint_cmake
+            ament_lint_common
+            ament_mypy
+            ament_pclint
+            ament_pep257
+            ament_pycodestyle
+            ament_pyflakes
+            ament_uncrustify
+            ament_xmllint
   tue-ci:
     name: TUe CI - ${{ matrix.package }} (${{ matrix.ros_distro }})
     runs-on: ubuntu-latest
