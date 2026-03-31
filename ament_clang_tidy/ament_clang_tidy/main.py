@@ -52,6 +52,9 @@ def main(argv: list[str] = sys.argv[1:]) -> Literal[None, 1]:
              ' "compile_commands.json" files. If <path> is a file, ament_clang_tidy will'
              ' treat it as a "compile_commands.json" file')
     parser.add_argument(
+        '--clang-tidy-version',
+        help='The version of clang-tidy to use.')
+    parser.add_argument(
         '--jobs',
         type=int,
         default=1,
@@ -116,6 +119,10 @@ def main(argv: list[str] = sys.argv[1:]) -> Literal[None, 1]:
         'clang-tidy-11',
         'clang-tidy-6.0',
     ]
+
+    if args.clang_tidy_version:
+        bin_names = ['clang-tidy-' + args.clang_tidy_version]
+
     clang_tidy_bin = find_executable(bin_names)
     if not clang_tidy_bin:
         print('Could not find %s executable' %

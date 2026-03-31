@@ -23,10 +23,19 @@
 # The 'CONFIG_FILE' argument takes priority over
 # 'ament_cmake_clang_tidy_CONFIG_FILE' if both are defined
 #
+# The version of clang-tidy being run can be overridden by specifying either
+# the argument 'CLANG_TIDY_VERSION' or a global variable named
+# `ament_cmake_clang_tidy_CLANG_TIDY_VERSION`. The argument takes priority
+# over the global variable if both are defined.
+#
 # :param TESTNAME: the name of the test, default: "clang_tidy"
 # :type TESTNAME: string
 # :param CONFIG_FILE: the path of the configuration file for clang-tidy to consider
 # :type CONFIG_FILE: string
+# :param CLANG_TIDY_VERSION: the version suffix appended to
+#                            "clang-tidy-" when determining
+#                            the executable to run
+# :type CLANG_TIDY_VERSION: string
 # :param ARGN: the files or directories to check
 # :type ARGN: list of strings
 # :param TIMEOUT: the test timeout in seconds, default: 300
@@ -35,7 +44,7 @@
 # @public
 #
 function(ament_clang_tidy)
-  cmake_parse_arguments(ARG "" "TESTNAME;CONFIG_FILE;TIMEOUT;HEADER_FILTER;JOBS" "" ${ARGN})
+  cmake_parse_arguments(ARG "" "TESTNAME;CONFIG_FILE;TIMEOUT;HEADER_FILTER;JOBS;CLANG_TIDY_VERSION" "" ${ARGN})
   if(NOT ARG_TESTNAME)
     set(ARG_TESTNAME "clang_tidy")
   endif()
@@ -65,6 +74,12 @@ function(ament_clang_tidy)
     list(APPEND cmd "--jobs" "${ARG_JOBS}")
   elseif(DEFINED ament_cmake_clang_tidy_JOBS)
     list(APPEND cmd "--jobs" "${ament_cmake_clang_tidy_JOBS}")
+  endif()
+
+  if(ARG_CLANG_TIDY_VERSION)
+    list(APPEND cmd "--clang-tidy-version" "${ARG_CLANG_TIDY_VERSION}")
+  elseif(DEFINED ament_cmake_clang_tidy_CLANG_TIDY_VERSION)
+    list(APPEND cmd "--clang-tidy-version" "${ament_cmake_clang_tidy_CLANG_TIDY_VERSION}")
   endif()
 
   if(NOT ARG_TIMEOUT)
