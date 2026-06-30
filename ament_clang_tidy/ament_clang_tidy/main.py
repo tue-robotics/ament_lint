@@ -24,7 +24,7 @@ import re
 import subprocess
 import sys
 import time
-from typing import Literal
+from typing import List, Literal
 
 from xml.sax.saxutils import escape
 from xml.sax.saxutils import quoteattr
@@ -32,7 +32,7 @@ from xml.sax.saxutils import quoteattr
 import yaml
 
 
-def main(argv: list[str] = sys.argv[1:]) -> Literal[None, 1]:
+def main(argv: List[str] = sys.argv[1:]) -> Literal[None, 1]:
     extensions = ['c', 'cc', 'cpp', 'cxx', 'h', 'hh', 'hpp', 'hxx']
 
     parser = argparse.ArgumentParser(
